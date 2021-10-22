@@ -1,0 +1,22 @@
+provider "aws" {
+region ="us-east-1"
+access_key = "in vpc"
+secret_key ="in vpc"
+}
+resource "aws_instance" "terraform"{
+ami = "ami-09e67e426f25ce0d7" 
+instance_type = "t2.micro"
+key_name = "basha"
+vpc_security_group_ids = ["in vpc"]  
+subnet_id = "in vpc"
+root_block_device {
+volume_type = "gp2"
+volume_size = "8"
+delete_on_termination = true
+
+
+}
+tags = {
+name = "terraform"
+}
+}
