@@ -1,0 +1,25 @@
+provider "aws" {
+region ="us-west-1"
+access_key = "in vpc"
+secret_key ="in vpc"
+}
+module "ec2_instance" {
+  source  = "terraform-aws-modules/ec2-instance/aws"
+  version = "~> 3.0"
+
+  for_each = toset(["one", "two", "three"])
+
+  name = "instance-${each.key}"
+
+  ami                    = "ami-0d382e80be7ffdae5"
+  instance_type          = "t2.micro"
+  key_name               = "basha"
+  monitoring             = true
+  vpc_security_group_ids = ["sg-38202372"]
+  subnet_id              = "subnet-f653e4ac"
+
+  tags = {
+    Terraform   = "true"
+    Environment = "dev"
+  }
+}
